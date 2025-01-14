@@ -81,6 +81,23 @@ func TestName(t *testing.T){
 		g.Expect(error.Error()).To(Equal("Name is required"))
 	})
 
+	t.Run(`Name must be only letters`, func(t *testing.T){
+		user := entity.User{
+			StudentID: "B6525163",
+			Name: "12345",
+			Email: "test@gmail.com",
+			PhoneNumber: "1234567890",
+			GenderID: 1,
+		}
+
+		ok, error := govalidator.ValidateStruct(user)
+
+		g.Expect(ok).NotTo(BeTrue())
+		g.Expect(error).NotTo(BeNil())
+
+		g.Expect(error.Error()).To(Equal("Name must be only letters"))
+	})
+
 	t.Run(`Name is valid`, func(t *testing.T){
 		user := entity.User{
 			StudentID: "B6525163",
